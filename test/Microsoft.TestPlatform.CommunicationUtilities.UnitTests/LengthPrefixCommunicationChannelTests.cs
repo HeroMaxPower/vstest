@@ -43,7 +43,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
         [TestMethod]
         public async Task SendShouldWriteTheDataOnStream()
         {
-            await this.channel.Send(DUMMYDATA);
+            await this.channel.Send(DUMMYDATA).ConfigureAwait(false);
 
             SeekToBeginning(this.stream);
             Assert.AreEqual(DUMMYDATA, this.reader.ReadString());
@@ -52,7 +52,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
         [TestMethod]
         public async Task SendShouldWriteInLengthPrefixedFormat()
         {
-            await this.channel.Send(DUMMYDATA);
+            await this.channel.Send(DUMMYDATA).ConfigureAwait(false);
 
             SeekToBeginning(this.stream);
             Assert.AreEqual(DUMMYDATA.Length, Read7BitEncodedInt(this.reader));
@@ -63,7 +63,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
         {
             // Every day is a good day
             var utf8Data = "日日是好日";
-            await this.channel.Send(utf8Data);
+            await this.channel.Send(utf8Data).ConfigureAwait(false);
 
             SeekToBeginning(this.stream);
             Assert.AreEqual(utf8Data, this.reader.ReadString());
@@ -77,7 +77,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
             {
                 var communicationChannel = new LengthPrefixCommunicationChannel(bufferedStream);
 
-                await communicationChannel.Send("a");
+                await communicationChannel.Send("a").ConfigureAwait(false);
 
                 SeekToBeginning(this.stream);
                 Assert.AreEqual("a", this.reader.ReadString());
@@ -103,7 +103,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
             this.writer.Write(DUMMYDATA);
             SeekToBeginning(this.stream);
 
-            await this.channel.NotifyDataAvailable();
+            await this.channel.NotifyDataAvailable().ConfigureAwait(false);
 
             Assert.AreEqual(DUMMYDATA, data);
         }
@@ -114,7 +114,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
             this.writer.Write(DUMMYDATA);
             SeekToBeginning(this.stream);
 
-            await this.channel.NotifyDataAvailable();
+            await this.channel.NotifyDataAvailable().ConfigureAwait(false);
 
             // Data is read irrespective of listeners. See note in NotifyDataAvailable
             // implementation.

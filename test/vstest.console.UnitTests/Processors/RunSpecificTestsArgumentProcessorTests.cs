@@ -333,6 +333,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             this.mockOutput.Verify(o => o.WriteLine("Starting test discovery, please wait...", OutputLevel.Information), Times.Once);
             this.mockOutput.Verify(o => o.WriteLine(NoDiscoveredTestsWarning, OutputLevel.Warning), Times.Once);
             Assert.AreEqual(ArgumentProcessorResult.Success, argumentProcessorResult);
+            testRequestManager.Dispose();
         }
 
         [TestMethod]

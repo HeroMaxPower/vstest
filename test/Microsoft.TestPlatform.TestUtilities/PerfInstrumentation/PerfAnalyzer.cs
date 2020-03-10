@@ -199,8 +199,10 @@ namespace Microsoft.TestPlatform.TestUtilities.PerfInstrumentation
 
         private static TestPlatformTask CreateTestPlatformTask(TraceEvent data)
         {
-            var task = new TestPlatformTask(data.TaskName, data.TimeStampRelativeMSec);
-            task.PayLoadProperties = GetPayloadProperties(data);
+            var task = new TestPlatformTask(data.TaskName, data.TimeStampRelativeMSec)
+            {
+                PayLoadProperties = GetPayloadProperties(data)
+            };
             return task;
         }
 

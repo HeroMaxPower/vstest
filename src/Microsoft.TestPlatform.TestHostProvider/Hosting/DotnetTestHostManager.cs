@@ -173,7 +173,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CrossPlatEngine.Hosting
         /// <inheritdoc/>
         public async Task<bool> LaunchTestHostAsync(TestProcessStartInfo testHostStartInfo, CancellationToken cancellationToken)
         {
-            return await Task.Run(() => this.LaunchHost(testHostStartInfo, cancellationToken), cancellationToken);
+            return await Task.Run(() => this.LaunchHost(testHostStartInfo, cancellationToken), cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

@@ -61,7 +61,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             var port = this.communicationManager.HostServer(new IPEndPoint(IPAddress.Loopback, 0)).Port;
 
             Assert.IsTrue(port > 0);
-            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port);
+            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port).ConfigureAwait(false);
             Assert.IsTrue(this.tcpClient.Connected);
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
                     },
                 null);
 
-            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port);
+            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port).ConfigureAwait(false);
             Assert.IsTrue(this.tcpClient.Connected);
             Assert.IsTrue(waitEvent.WaitOne(1000) && clientConnected);
         }
@@ -90,7 +90,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var port = this.communicationManager.HostServer(new IPEndPoint(IPAddress.Loopback, 0)).Port;
             var acceptClientTask = this.communicationManager.AcceptClientAsync();
-            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port);
+            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port).ConfigureAwait(false);
 
             var clientConnected = this.communicationManager.WaitForClientConnection(1000);
 
@@ -132,7 +132,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
             var setupClientTask = this.communicationManager.SetupClientAsync(new IPEndPoint(IPAddress.Loopback, port));
 
-            var client = await this.tcpListener.AcceptTcpClientAsync();
+            var client = await this.tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
             Assert.IsTrue(client.Connected);
         }
 
@@ -141,7 +141,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var port = this.StartServer();
             var setupClientTask = this.communicationManager.SetupClientAsync(new IPEndPoint(IPAddress.Loopback, port));
-            await this.tcpListener.AcceptTcpClientAsync();
+            await this.tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
 
             var serverConnected = this.communicationManager.WaitForServerConnection(1000);
 
@@ -162,7 +162,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task StopClientShouldDisconnectClient()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
 
             this.communicationManager.StopClient();
 
@@ -177,7 +177,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task SendMessageShouldSendMessageWithoutAnyPayload()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
 
             this.communicationManager.SendMessage(MessageType.StartDiscovery);
 
@@ -187,7 +187,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task SendMessageWithPayloadShouldSerializeAndSendThePayload()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
 
             this.communicationManager.SendMessage(MessageType.StartDiscovery, DummyPayload);
 
@@ -197,7 +197,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task SendMessageWithPayloadShouldSerializeAndSendThePayloadWithVersionStamped()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
 
             this.communicationManager.SendMessage(MessageType.StartDiscovery, DummyPayload, 2);
 
@@ -207,7 +207,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task SendMessageWithRawMessageShouldNotSerializeThePayload()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
 
             this.communicationManager.SendRawMessage(DummyPayload);
 
@@ -221,7 +221,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task ReceiveMessageShouldReceiveDeserializedMessage()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
             this.WriteToStream(client.GetStream(), TestDiscoveryStartMessageWithDummyPayload);
 
             var message = this.communicationManager.ReceiveMessage();
@@ -233,10 +233,10 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task ReceiveMessageAsyncShouldReceiveDeserializedMessage()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
             this.WriteToStream(client.GetStream(), TestDiscoveryStartMessageWithVersionAndPayload);
 
-            var message = await this.communicationManager.ReceiveMessageAsync(CancellationToken.None);
+            var message = await this.communicationManager.ReceiveMessageAsync(CancellationToken.None).ConfigureAwait(false);
             var versionedMessage = message as VersionedMessage;
             Assert.AreEqual(MessageType.StartDiscovery, versionedMessage.MessageType);
             Assert.AreEqual(DummyPayload, versionedMessage.Payload);
@@ -246,7 +246,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task ReceiveRawMessageShouldNotDeserializeThePayload()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
             this.WriteToStream(client.GetStream(), DummyPayload);
 
             var message = this.communicationManager.ReceiveRawMessage();
@@ -257,10 +257,10 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         [TestMethod]
         public async Task ReceiveRawMessageAsyncShouldNotDeserializeThePayload()
         {
-            var client = await this.StartServerAndWaitForConnection();
+            var client = await this.StartServerAndWaitForConnection().ConfigureAwait(false);
             this.WriteToStream(client.GetStream(), DummyPayload);
 
-            var message = await this.communicationManager.ReceiveRawMessageAsync(CancellationToken.None);
+            var message = await this.communicationManager.ReceiveRawMessageAsync(CancellationToken.None).ConfigureAwait(false);
 
             Assert.AreEqual(DummyPayload, message);
         }
@@ -301,7 +301,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var peer = new SocketCommunicationManager();
             Assert.IsNull(peer.ReceiveRawMessage());
-            Assert.IsNull(await peer.ReceiveRawMessageAsync(CancellationToken.None));
+            Assert.IsNull(await peer.ReceiveRawMessageAsync(CancellationToken.None).ConfigureAwait(false));
         }
 
         [TestMethod]
@@ -309,7 +309,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var peer = new SocketCommunicationManager();
             Assert.IsNull(peer.ReceiveMessage());
-            Assert.IsNull(await peer.ReceiveMessageAsync(CancellationToken.None));
+            Assert.IsNull(await peer.ReceiveMessageAsync(CancellationToken.None).ConfigureAwait(false));
         }
 
         private static void SendData(ICommunicationManager communicationManager)
@@ -340,7 +340,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var port = this.StartServer();
             var setupClientTask = this.communicationManager.SetupClientAsync(new IPEndPoint(IPAddress.Loopback, port));
-            var client = await this.tcpListener.AcceptTcpClientAsync();
+            var client = await this.tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
             this.communicationManager.WaitForServerConnection(1000);
 
             return client;

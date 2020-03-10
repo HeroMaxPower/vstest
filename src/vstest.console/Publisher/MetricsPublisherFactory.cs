@@ -24,10 +24,10 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.Publisher
 
             if (isTelemetryOptedIn && !isDesignMode && logTelemery)
             {
-                return await Task.FromResult<IMetricsPublisher>(new TextFileTelemetryPublisher());
+                return await Task.FromResult<IMetricsPublisher>(new TextFileTelemetryPublisher()).ConfigureAwait(false);
             }
 
-            return await Task.FromResult<IMetricsPublisher>(new NoOpMetricsPublisher());
+            return await Task.FromResult<IMetricsPublisher>(new NoOpMetricsPublisher()).ConfigureAwait(false);
         }
     }
 }

@@ -417,7 +417,7 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
             string errorData = "Custom Error Strings";
             this.ErrorCallBackTestHelper(errorData, -1);
 
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
 
             Assert.AreEqual(errorData, this.errorMessage);
         }
@@ -428,7 +428,7 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
             string errorData = string.Empty;
             this.ErrorCallBackTestHelper(errorData, 0);
 
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
 
             Assert.IsNull(this.errorMessage);
         }
@@ -440,7 +440,7 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
         {
             this.ErrorCallBackTestHelper(errorData, -1);
 
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
 
             Assert.AreEqual(this.errorMessage, string.Empty);
         }
@@ -452,7 +452,7 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
         {
             this.ExitCallBackTestHelper(exitCode);
 
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
 
             Assert.AreEqual(this.errorMessage, string.Empty);
             Assert.AreEqual(this.exitCode, exitCode);
@@ -467,8 +467,8 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
                 .Callback<object>(p => isVerified = ((Process)p).Id == pid);
 
             this.ExitCallBackTestHelper(0);
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
-            await this.testableTestHostManager.CleanTestHostAsync(CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
+            await this.testableTestHostManager.CleanTestHostAsync(CancellationToken.None).ConfigureAwait(false);
 
             Assert.IsTrue(isVerified);
         }
@@ -481,8 +481,8 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
             this.mockProcessHelper.Setup(ph => ph.TerminateProcess(It.IsAny<Process>())).Callback<object>(p => isVerified = ((Process)p).Id == pid).Throws<Exception>();
 
             this.ExitCallBackTestHelper(0);
-            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None);
-            await this.testableTestHostManager.CleanTestHostAsync(CancellationToken.None);
+            await this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), CancellationToken.None).ConfigureAwait(false);
+            await this.testableTestHostManager.CleanTestHostAsync(CancellationToken.None).ConfigureAwait(false);
 
             Assert.IsTrue(isVerified);
         }

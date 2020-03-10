@@ -130,9 +130,9 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
             {
                 port = this.communicationManager.HostServer(new IPEndPoint(IPAddress.Loopback, 0)).Port;
                 var timeoutSource = new CancellationTokenSource(clientConnectionTimeout);
-                await Task.Run(() => this.communicationManager.AcceptClientAsync(), timeoutSource.Token);
+                await Task.Run(() => communicationManager.AcceptClientAsync(), timeoutSource.Token).ConfigureAwait(false);
 
-                this.handShakeSuccessful = await this.HandShakeWithVsTestConsoleAsync();
+                this.handShakeSuccessful = await this.HandShakeWithVsTestConsoleAsync().ConfigureAwait(false);
                 this.handShakeComplete.Set();
             }
             catch (Exception ex)
@@ -178,7 +178,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
             {
                 EqtTrace.Info("VsTestConsoleRequestSender.DiscoverTestsAsync: Starting test discovery.");
             }
-            await this.SendMessageAndListenAndReportTestCasesAsync(sources, runSettings, options, eventHandler);
+            await SendMessageAndListenAndReportTestCasesAsync(sources, runSettings, options, eventHandler).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -203,11 +203,11 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
             {
                 EqtTrace.Info("VsTestConsoleRequestSender.StartTestRunAsync: Starting test run.");
             }
-            await this.SendMessageAndListenAndReportTestResultsAsync(
+            await SendMessageAndListenAndReportTestResultsAsync(
                 MessageType.TestRunAllSourcesWithDefaultHost,
                 new TestRunRequestPayload() { Sources = sources.ToList(), RunSettings = runSettings, TestPlatformOptions = options },
                 runEventsHandler,
-                null);
+                null).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -232,11 +232,11 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                 EqtTrace.Info("VsTestConsoleRequestSender.StartTestRunAsync: Starting test run.");
             }
 
-            await this.SendMessageAndListenAndReportTestResultsAsync(
+            await SendMessageAndListenAndReportTestResultsAsync(
                 MessageType.TestRunAllSourcesWithDefaultHost,
                 new TestRunRequestPayload() { TestCases = testCases.ToList(), RunSettings = runSettings, TestPlatformOptions = options },
                 runEventsHandler,
-                null);
+                null).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -278,7 +278,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                 EqtTrace.Info("VsTestConsoleRequestSender.StartTestRunWithCustomHostAsync: Starting test run.");
             }
 
-            await this.SendMessageAndListenAndReportTestResultsAsync(
+            await SendMessageAndListenAndReportTestResultsAsync(
                 MessageType.GetTestRunnerProcessStartInfoForRunAll,
                 new TestRunRequestPayload()
                 {
@@ -288,7 +288,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                     TestPlatformOptions = options
                 },
                 runEventsHandler,
-                customHostLauncher);
+                customHostLauncher).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -320,7 +320,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                 EqtTrace.Info("VsTestConsoleRequestSender.StartTestRunWithCustomHostAsync: Starting test run.");
             }
 
-            await this.SendMessageAndListenAndReportTestResultsAsync(
+            await SendMessageAndListenAndReportTestResultsAsync(
                 MessageType.GetTestRunnerProcessStartInfoForRunSelected,
                 new TestRunRequestPayload()
                 {
@@ -330,7 +330,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                     TestPlatformOptions = options
                 },
                 runEventsHandler,
-                customHostLauncher);
+                customHostLauncher).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -428,11 +428,11 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
         private async Task<bool> HandShakeWithVsTestConsoleAsync()
         {
             var success = false;
-            var message = await this.communicationManager.ReceiveMessageAsync(this.processExitCancellationTokenSource.Token);
+            var message = await communicationManager.ReceiveMessageAsync(processExitCancellationTokenSource.Token).ConfigureAwait(false);
             if (message.MessageType == MessageType.SessionConnected)
             {
                 this.communicationManager.SendMessage(MessageType.VersionCheck, this.protocolVersion);
-                message = await this.communicationManager.ReceiveMessageAsync(this.processExitCancellationTokenSource.Token);
+                message = await communicationManager.ReceiveMessageAsync(processExitCancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (message.MessageType == MessageType.VersionCheck)
                 {
@@ -538,7 +538,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                 // This is just a notification.
                 while (!isDiscoveryComplete)
                 {
-                    var message = await this.TryReceiveMessageAsync();
+                    var message = await TryReceiveMessageAsync().ConfigureAwait(false);
 
                     if (string.Equals(MessageType.TestCasesFound, message.MessageType))
                     {
@@ -665,7 +665,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
                 // Currently each of the operations are not separate tasks since they should not each take much time. This is just a notification.
                 while (!isTestRunComplete)
                 {
-                    var message = await this.TryReceiveMessageAsync();
+                    var message = await TryReceiveMessageAsync().ConfigureAwait(false);
 
                     if (string.Equals(MessageType.TestRunStatsChange, message.MessageType))
                     {
@@ -734,7 +734,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer
 
         private async Task<Message> TryReceiveMessageAsync()
         {
-            Message message = await this.communicationManager.ReceiveMessageAsync(this.processExitCancellationTokenSource.Token);
+            Message message = await communicationManager.ReceiveMessageAsync(processExitCancellationTokenSource.Token).ConfigureAwait(false);
 
             if (message == null)
             {

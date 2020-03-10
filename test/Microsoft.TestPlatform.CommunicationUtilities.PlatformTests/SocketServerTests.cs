@@ -47,7 +47,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             var connectionInfo = this.socketServer.Start(this.defaultConnection);
 
             Assert.IsFalse(string.IsNullOrEmpty(connectionInfo));
-            await this.ConnectToServer(connectionInfo.GetIPEndPoint().Port);
+            await this.ConnectToServer(connectionInfo.GetIPEndPoint().Port).ConfigureAwait(false);
             Assert.IsTrue(this.tcpClient.Connected);
         }
 
@@ -147,7 +147,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
         {
             var channel = this.SetupChannel(out ConnectedEventArgs _);
 
-            await channel.Send(DUMMYDATA);
+            await channel.Send(DUMMYDATA).ConfigureAwait(false);
 
             Assert.AreEqual(DUMMYDATA, ReadData(this.Client));
         }
@@ -175,7 +175,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
         private async Task ConnectToServer(int port)
         {
-            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port);
+            await this.tcpClient.ConnectAsync(IPAddress.Loopback, port).ConfigureAwait(false);
         }
     }
 }
