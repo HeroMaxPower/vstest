@@ -112,7 +112,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
             {
                 this.clientConnectedEvent.Reset();
 
-                var client = await tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
+                var client = await this.tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
                 this.socket = client.Client;
                 this.socket.NoDelay = true;
 
@@ -178,7 +178,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
                 try
                 {
                     EqtTrace.Verbose("SocketCommunicationManager : SetupClientAsync : Attempting to connect to the server.");
-                    await tcpClient.ConnectAsync(endpoint.Address, endpoint.Port).ConfigureAwait(false);
+                    await this.tcpClient.ConnectAsync(endpoint.Address, endpoint.Port).ConfigureAwait(false);
 
                     if (this.tcpClient.Connected)
                     {
@@ -304,7 +304,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
         /// </returns>
         public async Task<Message> ReceiveMessageAsync(CancellationToken cancellationToken)
         {
-            var rawMessage = await ReceiveRawMessageAsync(cancellationToken).ConfigureAwait(false);
+            var rawMessage = await this.ReceiveRawMessageAsync(cancellationToken).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(rawMessage))
             {
                 return this.dataSerializer.DeserializeMessage(rawMessage);
@@ -337,7 +337,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
         /// </returns>
         public async Task<string> ReceiveRawMessageAsync(CancellationToken cancellationToken)
         {
-            var str = await Task.Run(() => TryReceiveRawMessage(cancellationToken)).ConfigureAwait(false);
+            var str = await Task.Run(() => this.TryReceiveRawMessage(cancellationToken)).ConfigureAwait(false);
             return str;
         }
 

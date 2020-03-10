@@ -71,7 +71,7 @@ namespace Microsoft.VisualStudio.TestPlatform.ObjectModel
 
         private async void WriteToFile(IEnumerable<string> lines)
         {
-            await semaphoreSlim.WaitAsync().ConfigureAwait(false);
+            await this.semaphoreSlim.WaitAsync().ConfigureAwait(false);
 
             await Task.Run(async () =>
             {
@@ -79,7 +79,7 @@ namespace Microsoft.VisualStudio.TestPlatform.ObjectModel
                 {
                     foreach (var line in lines)
                     {
-                        await streamWriter.WriteLineAsync(line).ConfigureAwait(false);
+                        await this.streamWriter.WriteLineAsync(line).ConfigureAwait(false);
                     }
                 }
                 catch (Exception)
@@ -88,7 +88,7 @@ namespace Microsoft.VisualStudio.TestPlatform.ObjectModel
                 }
                 finally
                 {
-                    semaphoreSlim.Release();
+                    this.semaphoreSlim.Release();
                 }
             }).ConfigureAwait(false);
         }

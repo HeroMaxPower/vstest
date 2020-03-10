@@ -28,7 +28,7 @@ namespace TestPlatform.TestUtilities
         /// </returns>
         public static async Task<ICollection<string>> NumberOfProcessCreated(CancellationTokenSource cts, string processName)
         {
-            return await NumberOfProcessCreated(cts, new[] { processName });
+            return await NumberOfProcessCreated(cts, new[] { processName }).ConfigureAwait(false);
         }
             
         public static async Task<ICollection<string>> NumberOfProcessCreated(CancellationTokenSource cts, IEnumerable<string> processNames)
@@ -36,7 +36,7 @@ namespace TestPlatform.TestUtilities
             var processesBeforeRun = GetProcesses(processNames);
 
             var processesCreated = Task.Run(() => NumberOfProcessLaunchedDuringRun(cts.Token, processesBeforeRun, processNames));
-            return await processesCreated;
+            return await processesCreated.ConfigureAwait(false);
         }
 
         /// <summary>
