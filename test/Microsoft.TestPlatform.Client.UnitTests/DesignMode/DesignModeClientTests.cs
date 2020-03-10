@@ -195,7 +195,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.DesignMode
                             receivedTestRunPayload = trp;
                             allTasksComplete.Set();
                         });
-
+            allTasksComplete.Dispose();
             this.mockCommunicationManager.SetupSequence(cm => cm.ReceiveMessage())
                 .Returns(getProcessStartInfoMessage)
                 .Returns(sessionEnd);
@@ -257,6 +257,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.DesignMode
                         receivedTestRunPayload = trp;
                         allTasksComplete.Set();
                     });
+            allTasksComplete.Dispose();
             this.mockCommunicationManager.SetupSequence(cm => cm.ReceiveMessage())
                 .Returns(getProcessStartInfoMessage)
                 .Returns(sessionEnd);
@@ -318,7 +319,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.DesignMode
 
             var info = new TestProcessStartInfo();
             var processId = testableDesignModeClient.LaunchCustomHost(info, CancellationToken.None);
-
+            testableDesignModeClient.Dispose();
             Assert.AreEqual(expectedProcessId, processId);
         }
 
@@ -342,6 +343,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.DesignMode
 
             var info = new TestProcessStartInfo();
             testableDesignModeClient.LaunchCustomHost(info, CancellationToken.None);
+            testableDesignModeClient.Dispose();
         }
 
         [TestMethod]
@@ -355,6 +357,8 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.DesignMode
             cancellationTokenSource.Cancel();
 
             testableDesignModeClient.LaunchCustomHost(info, cancellationTokenSource.Token);
+            testableDesignModeClient.Dispose();
+            cancellationTokenSource.Dispose();
         }
 
         [TestMethod]

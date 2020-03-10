@@ -350,6 +350,7 @@ namespace TestPlatform.TestHostProvider.Hosting.UnitTests
             cancellationTokenSource.Cancel();
 
             Assert.ThrowsException<System.AggregateException>(() => this.testableTestHostManager.LaunchTestHostAsync(this.GetDefaultStartInfo(), cancellationTokenSource.Token).Wait());
+            cancellationTokenSource.Dispose();
         }
 
         [TestMethod]

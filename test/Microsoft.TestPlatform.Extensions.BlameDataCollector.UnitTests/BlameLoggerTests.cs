@@ -87,6 +87,7 @@ namespace Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests
 
             // Verify Call
             this.mockBlameReaderWriter.Verify(x => x.ReadTestSequence(It.IsAny<string>()), Times.Never);
+            loggerEvents.Dispose();
         }
 
         /// <summary>
@@ -109,6 +110,7 @@ namespace Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests
 
             // Verify Call
             this.mockBlameReaderWriter.Verify(x => x.ReadTestSequence(It.IsAny<string>()), Times.Never);
+            loggerEvents.Dispose();
         }
 
         private AttachmentSet GetAttachmentSet()
@@ -148,6 +150,7 @@ namespace Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests
 
             // Verify Call
             this.mockBlameReaderWriter.Verify(x => x.ReadTestSequence(It.Is<string>(str => str.EndsWith(".xml"))), Times.Exactly(count));
+            loggerEvents.Dispose();
         }
 
         /// <summary>

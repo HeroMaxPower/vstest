@@ -61,7 +61,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
 
             var discoveryRequest = tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             this.hostManager.Verify(hm => hm.Initialize(It.IsAny<TestSessionMessageLogger>(), It.IsAny<string>()), Times.Once);
             this.discoveryManager.Verify(dm => dm.Initialize(false), Times.Once);
             Assert.AreEqual(discoveryCriteria, discoveryRequest.DiscoveryCriteria);
@@ -107,6 +107,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             TestPlatform tp = new TestPlatform();
 
             Assert.ThrowsException<ArgumentNullException>(() => tp.CreateDiscoveryRequest(this.mockRequestData.Object, null, new TestPlatformOptions()));
+            tp.Dispose();
         }
 
         [TestMethod]
@@ -117,7 +118,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var additionalExtensions = new List<string> { "e1.dll", "e2.dll" };
 
             tp.UpdateExtensions(additionalExtensions, skipExtensionFilters: true);
-
+            tp.Dispose();
             this.extensionManager.Verify(em => em.UseAdditionalExtensions(additionalExtensions, true));
         }
 
@@ -128,7 +129,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
 
             tp.ClearExtensions();
-
+            tp.Dispose();
             this.extensionManager.Verify(em => em.ClearExtensions());
         }
 
@@ -152,10 +153,12 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             try
             {
                 tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
+                tp.Dispose();
             }
             catch(TestPlatformException ex)
             {
                 exceptionThrown = true;
+                tp.Dispose();
                 Assert.AreEqual("No suitable test runtime provider found for this run.", ex.Message);
             }
 
@@ -189,6 +192,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.mockFileHelper.Object, this.hostManager.Object);
 
             var testRunRequest = tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
+            tp.Dispose();
             this.extensionManager.Verify(em => em.UseAdditionalExtensions(additionalExtensions, false));
         }
 
@@ -218,6 +222,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.mockFileHelper.Object, this.hostManager.Object);
 
             var testRunRequest = tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
+            tp.Dispose();
             this.extensionManager.Verify(em => em.UseAdditionalExtensions(additionalExtensions, false));
         }
 
@@ -249,6 +254,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.mockFileHelper.Object, this.hostManager.Object);
 
             tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
+            tp.Dispose();
             this.extensionManager.Verify(em => em.UseAdditionalExtensions(additionalExtensions, false));
             this.hostManager.Verify(hm => hm.GetTestSources(It.IsAny<IEnumerable<string>>()), Times.Never);
         }
@@ -267,7 +273,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
                 .Returns(testRunCriteria.Sources);
 
             var testRunRequest = tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             var actualTestRunRequest = testRunRequest as TestRunRequest;
 
             this.hostManager.Verify(hm => hm.Initialize(It.IsAny<TestSessionMessageLogger>(), It.IsAny<string>()), Times.Once);
@@ -324,7 +330,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
                 .Returns(testRunCriteria.Sources);
 
             var testRunRequest = tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             var actualTestRunRequest = testRunRequest as TestRunRequest;
             Assert.AreEqual(testRunCriteria, actualTestRunRequest.TestRunCriteria);
             this.hostManager.Verify(hl => hl.SetCustomLauncher(mockCustomLauncher.Object), Times.Once);
@@ -336,6 +342,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestPlatform();
 
             Assert.ThrowsException<ArgumentNullException>(() => tp.CreateTestRunRequest(this.mockRequestData.Object, null, new TestPlatformOptions()));
+            tp.Dispose();
         }
 
 
@@ -360,10 +367,12 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             try
             {
                 tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, new TestPlatformOptions());
+                tp.Dispose();
             }
             catch (TestPlatformException ex)
             {
                 exceptionThrown = true;
+                tp.Dispose();
                 Assert.AreEqual("No suitable test runtime provider found for this run.", ex.Message);
             }
 
@@ -401,6 +410,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
 
             // Action
             var discoveryRequest = tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, new TestPlatformOptions());
+            tp.Dispose();
 
             // Verify
             this.extensionManager.Verify(em => em.UseAdditionalExtensions(additionalExtensions, false));
@@ -426,7 +436,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
 
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
             tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             this.loggerManager.Verify(lm => lm.Initialize(settingsXml));
         }
 
@@ -450,7 +460,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
 
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
             tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             this.loggerManager.Verify(lm => lm.Initialize(settingsXml));
         }
 
@@ -474,7 +484,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
 
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
             tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             this.loggerManager.Verify(lm => lm.Initialize(settingsXml));
         }
 
@@ -498,7 +508,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
 
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
             tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, new TestPlatformOptions());
-
+            tp.Dispose();
             this.loggerManager.Verify(lm => lm.Initialize(settingsXml));
         }
 
@@ -515,6 +525,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
             var tp = new TestableTestPlatform(this.testEngine.Object, this.hostManager.Object);
 
             tp.CreateDiscoveryRequest(this.mockRequestData.Object, discoveryCriteria, options);
+            tp.Dispose();
         }
 
         private void InvokeCreateTestRunRequest(TestPlatformOptions options = null)
@@ -530,6 +541,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests
                 .Returns(testRunCriteria.Sources);
 
             tp.CreateTestRunRequest(this.mockRequestData.Object, testRunCriteria, options);
+            tp.Dispose();
         }
 
         private class TestableTestPlatform : TestPlatform

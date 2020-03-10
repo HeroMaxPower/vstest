@@ -63,7 +63,7 @@ namespace Microsoft.TestPlatform.AcceptanceTests
             this.InvokeVsTest(arguments);
 
             cts.Cancel();
-
+            cts.Dispose();
             Assert.AreEqual(
                 expectedNumOfProcessCreated,
                 numOfProcessCreatedTask.Result.Count,

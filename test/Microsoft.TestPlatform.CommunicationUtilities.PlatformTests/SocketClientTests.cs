@@ -91,6 +91,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             this.socketClient.Stop();
 
             Assert.IsTrue(waitEvent.WaitOne(TIMEOUT));
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -108,6 +109,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             this.tcpClient?.Dispose();
 #endif
             Assert.IsTrue(waitEvent.WaitOne(TIMEOUT));
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -121,6 +123,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             // Validate that write on server side fails
             waitEvent.WaitOne(TIMEOUT);
             Assert.ThrowsException<IOException>(() => WriteData(this.Client));
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -132,6 +135,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
             waitEvent.WaitOne(TIMEOUT);
             Assert.ThrowsException<CommunicationException>(() => channel.Send(DUMMYDATA));
+            waitEvent.Dispose();
         }
 
         protected override ICommunicationChannel SetupChannel(out ConnectedEventArgs connectedEvent)
@@ -156,6 +160,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
                 waitEvent.WaitOne(1000);
             }
 
+            waitEvent.Dispose();
             connectedEvent = serverConnectedEvent;
             return channel;
         }

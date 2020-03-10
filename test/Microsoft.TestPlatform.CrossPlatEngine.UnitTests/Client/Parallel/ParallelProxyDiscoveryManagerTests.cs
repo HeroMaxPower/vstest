@@ -82,6 +82,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.AreEqual(4, createdMockManagers.Count, "Number of Concurrent Managers created should be 4");
             createdMockManagers.ForEach(dm => dm.Verify(m => m.Abort(), Times.Once));
+            parallelDiscoveryManager.Dispose();
         }
 
         [TestMethod]
@@ -198,6 +199,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             parallelDiscoveryManager.HandlePartialDiscoveryComplete(proxyDiscovermanager, 20, new List<TestCase>(), isAborted: true);
 
             Assert.IsTrue(this.proxyManagerFuncCalled);
+            parallelDiscoveryManager.Dispose();
         }
 
         private IParallelProxyDiscoveryManager SetupDiscoveryManager(Func<IProxyDiscoveryManager> getProxyManager, int parallelLevel, bool abortDiscovery, int totalTests = 20)
@@ -268,6 +270,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             // Verify
             Assert.AreEqual(concurrentManagersCount, createdMockManagers.Count, $"Number of Concurrent Managers created should be {concurrentManagersCount}");
             createdMockManagers.ForEach(dm => dm.Verify(m => m.Initialize(skipDefaultAdapters), Times.Once));
+            parallelDiscoveryManager.Dispose();
         }
     }
 }

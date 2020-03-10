@@ -43,6 +43,7 @@ namespace Microsoft.TestPlatform.ObjectModel.PlatformTests
             Assert.AreEqual(14, diaNavigationData.MaxLineNumber, "Incorrect max line number");
 
             this.testEnvironment.TargetFramework = currentTargetFrameWork;
+            diaSession.Dispose();
         }
 
         [TestMethod]
@@ -61,6 +62,7 @@ namespace Microsoft.TestPlatform.ObjectModel.PlatformTests
             Assert.AreEqual(19, diaNavigationData.MaxLineNumber, "Incorrect max line number");
 
             this.testEnvironment.TargetFramework = currentTargetFrameWork;
+            diaSession.Dispose();
         }
 
         [TestMethod]
@@ -80,6 +82,7 @@ namespace Microsoft.TestPlatform.ObjectModel.PlatformTests
             this.ValidateLineNumbers(diaNavigationData.MinLineNumber, diaNavigationData.MaxLineNumber);
 
             this.testEnvironment.TargetFramework = currentTargetFrameWork;
+            diaSession.Dispose();
         }
 
         [TestMethod]
@@ -99,6 +102,7 @@ namespace Microsoft.TestPlatform.ObjectModel.PlatformTests
             Assert.IsNull(diaNavigationData);
 
             this.testEnvironment.TargetFramework = currentTargetFrameWork;
+            diaSession.Dispose();
         }
 
         [TestMethod]
@@ -120,6 +124,7 @@ namespace Microsoft.TestPlatform.ObjectModel.PlatformTests
             Assert.IsTrue(watch.Elapsed.Milliseconds < expectedTime, string.Format("DiaSession Perf test Actual time:{0} ms Expected time:{1} ms", watch.Elapsed.Milliseconds, expectedTime));
 
             this.testEnvironment.TargetFramework = currentTargetFrameWork;
+            diaSession.Dispose();
         }
 
         private void ValidateLineNumbers(int min, int max)

@@ -271,6 +271,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.DataCollection
 
             var resultString = "{ FriendlyName = Code Coverage, Uri = datacollector://microsoft/CodeCoverage/2.0 }";
             this.mockMetricsCollection.Verify(rd => rd.Add(TelemetryDataConstants.DataCollectorsEnabled, resultString), Times.Once);
+            proxyExecutionManager.Dispose();
         }
     }
 }

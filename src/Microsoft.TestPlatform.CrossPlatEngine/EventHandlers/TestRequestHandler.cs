@@ -203,6 +203,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
 
             EqtTrace.Verbose("Waiting for LaunchAdapterProcessWithDebuggerAttached ack");
             waitHandle.Wait();
+            waitHandle.Dispose();
             this.onAckMessageRecieved = null;
             return this.dataSerializer.DeserializePayload<int>(ackMessage);
         }

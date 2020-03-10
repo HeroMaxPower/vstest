@@ -111,7 +111,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             CommandLineOptions.Instance.IsDesignMode = true;
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, TestPlatformFactory.GetTestPlatform(), TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = new RunTestsArgumentExecutor(CommandLineOptions.Instance, runSettingsProvider, testRequestManager, this.mockOutput.Object);
-
+            testRequestManager.Dispose();
             Assert.AreEqual(ArgumentProcessorResult.Success, executor.Execute());
         }
 
@@ -121,7 +121,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             CommandLineOptions.Instance.Reset();
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, TestPlatformFactory.GetTestPlatform(), TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             Assert.ThrowsException<CommandLineException>(() => executor.Execute());
         }
 
@@ -150,7 +150,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             this.ResetAndAddSourceToCommandLineOptions();
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, mockTestPlatform.Object, TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             Assert.ThrowsException<TestPlatformException>(() => executor.Execute());
         }
 
@@ -166,7 +166,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             this.ResetAndAddSourceToCommandLineOptions();
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, mockTestPlatform.Object, TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             Assert.ThrowsException<SettingsException>(() => executor.Execute());
         }
 
@@ -182,7 +182,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             this.ResetAndAddSourceToCommandLineOptions();
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, mockTestPlatform.Object, TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             Assert.ThrowsException<InvalidOperationException>(() => executor.Execute());
         }
 
@@ -198,7 +198,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
             this.ResetAndAddSourceToCommandLineOptions();
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, mockTestPlatform.Object, TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             Assert.ThrowsException<Exception>(() => executor.Execute());
         }
 
@@ -253,7 +253,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Processors
 
             var testRequestManager = new TestRequestManager(CommandLineOptions.Instance, mockTestPlatform.Object, TestRunResultAggregator.Instance, this.mockTestPlatformEventSource.Object, this.inferHelper, this.mockMetricsPublisherTask, this.mockProcessHelper.Object);
             var executor = GetExecutor(testRequestManager);
-
+            testRequestManager.Dispose();
             return executor.Execute();
         }
 

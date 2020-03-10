@@ -53,6 +53,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             testLoggerManager.InitializeLoggerByUri(new Uri(loggerUri), new Dictionary<string, string>());
             testLoggerManager.TryGetUriFromFriendlyName("TestLoggerExtension", out var uri);
             Assert.AreEqual(uri.ToString(), new Uri(loggerUri).ToString());
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -61,6 +62,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             var testLoggerManager = new DummyTestLoggerManager();
             testLoggerManager.TryGetUriFromFriendlyName("TestLoggerExtension1", out var uri);
             Assert.IsNull(uri);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -69,6 +71,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             var testLoggerManager = new DummyTestLoggerManager();
             string result = testLoggerManager.GetResultsDirectory(null);
             Assert.IsNull(result);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -87,6 +90,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             var testLoggerManager = new DummyTestLoggerManager();
             string result = testLoggerManager.GetResultsDirectory(runSettingsXml);
             Assert.AreEqual(0, string.Compare("DummyTestResultsFolder", result));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -105,6 +109,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             string result = testLoggerManager.GetResultsDirectory(runSettingsXml);
 
             Assert.AreEqual(0, string.Compare(Constants.DefaultResultsDirectory, result));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -123,6 +128,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             var framework = testLoggerManager.GetTargetFramework(runSettingsXml);
 
             Assert.AreEqual(".NETFramework,Version=v4.5", framework.Name);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -138,6 +144,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -169,6 +176,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -201,6 +209,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             testLoggerManager.HandleTestRunComplete(new TestRunCompleteEventArgs(null, false, false, null, null, new TimeSpan())); // count should not increase because of second call.
 
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -228,6 +237,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -266,6 +276,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 {
                     testLoggerManager.InitializeLoggerByUri(null, null);
                 });
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -273,6 +284,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
         {
             var testLoggerManager = new DummyTestLoggerManager();
             Assert.IsFalse(testLoggerManager.InitializeLoggerByUri(new Uri("logger://NotALogger"), null));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -312,6 +324,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 string.IsNullOrWhiteSpace(
                     ValidLoggerWithParameters.parameters[DefaultLoggerParameterNames.TestRunDirectory]),
                 $"parameter {DefaultLoggerParameterNames.TestRunDirectory} should not be null, empty or whitespace");
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -365,6 +378,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Verify
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger"));
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -389,6 +403,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Assertions when discovery events registered
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -437,6 +452,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Assertions when discovery events registered
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -482,6 +498,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Assertions when test run events registered
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -529,6 +546,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Assertions when discovery events registered
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -569,6 +587,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             testLoggerManager.HandleDiscoveryComplete(discoveryCompleteEventArgs); // count should not increase because of second call.
 
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -593,6 +612,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             // Assertions when discovery events registered
             waitHandle.WaitOne();
             Assert.AreEqual(1, counter);
+            testLoggerManager.Dispose();
         }
 
         /// <summary>
@@ -642,6 +662,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -668,6 +689,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -697,6 +719,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -726,6 +749,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 testLoggerManager.Initialize(settingsXml);
             });
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -756,6 +780,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 testLoggerManager.Initialize(settingsXml);
             });
             Assert.AreEqual(0, InvalidLogger.counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -784,6 +809,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 testLoggerManager.Initialize(settingsXml);
             });
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -814,6 +840,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 testLoggerManager.Initialize(settingsXml);
             });
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -845,6 +872,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -878,6 +906,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -907,6 +936,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             {
                 testLoggerManager.Initialize(settingsXml);
             });
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -964,6 +994,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(1, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -993,6 +1024,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             testLoggerManager.Initialize(settingsXml);
 
             Assert.IsTrue(testLoggerManager.LoggersInitialized);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1021,6 +1053,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             var testLoggerManager = new DummyTestLoggerManager(mockRequestData.Object);
 
             Assert.IsFalse(testLoggerManager.LoggersInitialized);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1047,6 +1080,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             testLoggerManager.Initialize(settingsXml);
 
             Assert.IsFalse(testLoggerManager.LoggersInitialized);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1087,6 +1121,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1127,6 +1162,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1168,6 +1204,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
 
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1199,6 +1236,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1238,6 +1276,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1276,6 +1315,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1314,6 +1354,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1352,6 +1393,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1397,6 +1439,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1441,6 +1484,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual("Value2", ValidLoggerWithParameters.parameters["Key2"]);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, "TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLogger2,TestPlatform.CrossPlatEngine.UnitTests.TestLoggerManagerTests+ValidLoggerWithParameters"));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1477,6 +1521,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
                 testLoggerManager.Initialize(settingsXml);
             });
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1498,6 +1543,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, ""));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1521,6 +1567,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, ""));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1542,6 +1589,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, ""));
+            testLoggerManager.Dispose();
         }
 
         [TestMethod]
@@ -1567,6 +1615,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests
             Assert.AreEqual(0, ValidLoggerWithParameters.counter);
             mockMetricsCollection.Verify(
                 rd => rd.Add(TelemetryDataConstants.LoggerUsed, ""));
+            testLoggerManager.Dispose();
         }
 
         [ExtensionUri("testlogger://logger")]

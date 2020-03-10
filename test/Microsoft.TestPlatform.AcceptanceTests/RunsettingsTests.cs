@@ -551,7 +551,7 @@ namespace Microsoft.TestPlatform.AcceptanceTests
 
             this.InvokeVsTest(arguments);
             cts.Cancel();
-
+            cts.Dispose();
             var processesCreated = numOfProcessCreatedTask.Result;
             // assert
             Assert.AreEqual(

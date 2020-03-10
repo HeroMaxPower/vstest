@@ -94,6 +94,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.UnitTests
             var result = DataCollectionRequestHandler.Create(this.mockCommunicationManager.Object, this.mockMessageSink.Object);
 
             Assert.AreEqual(result, DataCollectionRequestHandler.Instance);
+            result.Dispose();
         }
 
         [TestMethod]

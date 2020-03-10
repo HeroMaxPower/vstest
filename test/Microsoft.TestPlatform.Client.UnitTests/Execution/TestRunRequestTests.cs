@@ -210,6 +210,8 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.Execution
             onTestSessionTimeoutCalled.WaitOne(20 * 1000);
 
             executionManager.Verify(o => o.Abort(It.IsAny<ITestRunEventsHandler>()), Times.Once);
+            testRunRequest.Dispose();
+            onTestSessionTimeoutCalled.Dispose();
         }
 
         /// <summary>
@@ -235,6 +237,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Client.UnitTests.Execution
             testRunRequest.ExecuteAsync();
 
             executionManager.Verify(o => o.Abort(It.IsAny<ITestRunEventsHandler>()), Times.Never);
+            testRunRequest.Dispose();
         }
 
         [TestMethod]

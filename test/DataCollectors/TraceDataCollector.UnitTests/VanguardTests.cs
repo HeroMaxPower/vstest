@@ -113,6 +113,7 @@ namespace Microsoft.VisualStudio.TraceDataCollector.UnitTests
 
             // TODO find the reason why additional process launched when collecting code coverage.
             Assert.IsTrue(numOfProcessCreated == 1 || numOfProcessCreated == 2, $"Number of process created:{numOfProcessCreated} expected is 1 or 2.");
+            cts.Dispose();
         }
 
         [TestMethod]
@@ -176,6 +177,7 @@ namespace Microsoft.VisualStudio.TraceDataCollector.UnitTests
 
             // TODO find the reason why additional process launched when collecting code coverage.
             Assert.IsTrue(numOfProcessCreated == 2 || numOfProcessCreated == 4, $"Number of process created:{numOfProcessCreated} expected is 2 or 4.");
+            cts.Dispose();
         }
 
         private static string GetCollectCommand(string sessionName, string outputName, string configurationFileName)

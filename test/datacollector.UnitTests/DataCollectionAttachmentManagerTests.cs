@@ -116,6 +116,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Common.DataCollector.UnitTests
             Assert.IsTrue(File.Exists(Path.Combine(TempDirectoryPath, filename)));
             Assert.IsTrue(File.Exists(Path.Combine(TempDirectoryPath, this.sessionId.Id.ToString(), filename)));
             Assert.AreEqual(1, this.attachmentManager.AttachmentSets[datacollectioncontext][uri].Attachments.Count);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -151,6 +152,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Common.DataCollector.UnitTests
 
             Assert.AreEqual(1, this.attachmentManager.AttachmentSets[datacollectioncontext][uri].Attachments.Count);
             Assert.AreEqual(1, this.attachmentManager.AttachmentSets[datacollectioncontext][uri1].Attachments.Count);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -178,6 +180,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Common.DataCollector.UnitTests
             Assert.AreEqual(1, this.attachmentManager.AttachmentSets[datacollectioncontext][uri].Attachments.Count);
             Assert.IsTrue(File.Exists(Path.Combine(TempDirectoryPath, this.sessionId.Id.ToString(), filename)));
             Assert.IsFalse(File.Exists(Path.Combine(TempDirectoryPath, filename)));
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -211,6 +214,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Common.DataCollector.UnitTests
             waitHandle.WaitOne(Timeout);
 
             Assert.AreEqual(2, this.attachmentManager.AttachmentSets[datacollectioncontext][uri].Attachments.Count);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -282,6 +286,7 @@ namespace Microsoft.VisualStudio.TestPlatform.Common.DataCollector.UnitTests
 
             // Wait for the attachment transfer tasks to complete
             var result = testableAttachmentManager.GetAttachments(datacollectioncontext);
+            waitHandle.Dispose();
             Assert.AreEqual(0, result[0].Attachments.Count);
         }
 

@@ -80,6 +80,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
             waitEvent.WaitOne();
             Assert.ThrowsException<IOException>(() => WriteData(this.tcpClient));
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -99,6 +100,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             waitEvent.WaitOne();
             Assert.IsNotNull(disconnected);
             Assert.IsNull(disconnected.Error);
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -112,6 +114,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
             waitEvent.Wait();
             Assert.ThrowsException<CommunicationException>(() => channel.Send(DUMMYDATA));
+            waitEvent.Dispose();
         }
 
         [TestMethod]
@@ -139,6 +142,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             this.tcpClient?.Dispose();
 #endif
             Assert.IsTrue(waitEvent.WaitOne(1000));
+            waitEvent.Dispose();
             Assert.IsTrue(clientDisconnected.Error is IOException);
         }
 
@@ -168,7 +172,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             var port = connectionInfo.GetIPEndPoint().Port;
             this.ConnectToServer(port).GetAwaiter().GetResult();
             waitEvent.WaitOne();
-
+            waitEvent.Dispose();
             connectedEvent = clientConnectedEvent;
             return channel;
         }

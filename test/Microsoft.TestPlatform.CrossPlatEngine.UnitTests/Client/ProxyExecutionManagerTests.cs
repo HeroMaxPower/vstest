@@ -669,6 +669,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             // Verify
             mockTestRunEventsHandler.Verify(mtdeh => mtdeh.HandleTestRunStatsChange(It.IsAny<TestRunChangedEventArgs>()), Times.Once);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -740,6 +741,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             // Verify
             mockTestRunEventsHandler.Verify(mtdeh => mtdeh.LaunchProcessWithDebuggerAttached(It.IsAny<TestProcessStartInfo>()), Times.Once);
+            waitHandle.Dispose();
         }
 
         private void SignalEvent(ManualResetEvent manualResetEvent)

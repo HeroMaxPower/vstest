@@ -104,6 +104,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.UnitTests
             var connectionTimeout = 5000;
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var connected = this.testRequestSender.WaitForRequestHandlerConnection(connectionTimeout, cancellationTokenSource.Token);
+            cancellationTokenSource.Dispose();
             watch.Stop();
 
             Assert.IsFalse(connected);
@@ -119,6 +120,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.UnitTests
             var connectionTimeout = 5000;
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var connected = this.testRequestSender.WaitForRequestHandlerConnection(connectionTimeout, cancellationTokenSource.Token);
+            cancellationTokenSource.Dispose();
             watch.Stop();
 
             Assert.IsFalse(connected);

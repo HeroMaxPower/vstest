@@ -62,6 +62,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             eventLogDataCollector.Initialize(expectedXmlDoc.DocumentElement, this.mockDataCollectionEvents.Object, this.mockDataCollectionSink, mockCollector.Object, this.dataCollectionEnvironmentContext);
 
             mockCollector.Verify(m => m.LogError(It.IsAny<DataCollectionContext>(), It.IsAny<string>(), It.IsAny<Exception>()), Times.Once);
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -233,6 +234,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             eventLogDataCollector.Initialize(null, this.mockDataCollectionEvents.Object, this.mockDataCollectionSink, this.mockDataCollectionLogger.Object, this.dataCollectionEnvironmentContext);
             this.mockDataCollectionEvents.Raise(x => x.SessionStart += null, new SessionStartEventArgs());
             Assert.AreEqual(1, eventLogDataCollector.ContextMap.Count);
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -244,6 +246,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             eventLogDataCollector.Initialize(null, this.mockDataCollectionEvents.Object, this.mockDataCollectionSink, this.mockDataCollectionLogger.Object, this.dataCollectionEnvironmentContext);
             this.mockDataCollectionEvents.Raise(x => x.TestCaseStart += null, new TestCaseStartEventArgs(new DataCollectionContext(new SessionId(Guid.NewGuid()), new TestExecId(Guid.NewGuid())), new TestCase()));
             Assert.AreEqual(1, eventLogDataCollector.ContextMap.Count);
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -257,6 +260,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             this.mockDataCollectionEvents.Raise(x => x.TestCaseStart += null, new TestCaseStartEventArgs(context, tc));
             this.mockDataCollectionEvents.Raise(x => x.TestCaseEnd += null, new TestCaseEndEventArgs(context, tc, TestOutcome.Passed));
             Assert.IsTrue(this.mockDataCollectionSink.IsSendFileAsyncInvoked);
+            eventLogDataCollector.Dispose();
         }
 
         public void TestCaseEndEventShouldInvokeSendFileAsync()
@@ -268,6 +272,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             this.mockDataCollectionEvents.Raise(x => x.TestCaseStart += null, new TestCaseStartEventArgs(context, tc));
             this.mockDataCollectionEvents.Raise(x => x.TestCaseEnd += null, new TestCaseEndEventArgs(context, tc, TestOutcome.Passed));
             Assert.IsTrue(this.mockDataCollectionSink.IsSendFileAsyncInvoked);
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -282,6 +287,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             {
                 this.mockDataCollectionEvents.Raise(x => x.TestCaseEnd += null, new TestCaseEndEventArgs(context, tc, TestOutcome.Passed));
             });
+            eventLogDataCollector.Dispose();
         }
 
         public void SessionEndEventShouldThrowIfSessionStartEventtIsNotInvoked()
@@ -294,6 +300,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
                 {
                     this.mockDataCollectionEvents.Raise(x => x.SessionEnd += null, new SessionEndEventArgs(this.dataCollectionEnvironmentContext.SessionDataCollectionContext));
                 });
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -305,6 +312,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
             this.mockDataCollectionEvents.Raise(x => x.SessionStart += null, new SessionStartEventArgs(this.dataCollectionEnvironmentContext.SessionDataCollectionContext, new Dictionary<string, object>()));
             this.mockDataCollectionEvents.Raise(x => x.SessionEnd += null, new SessionEndEventArgs(this.dataCollectionEnvironmentContext.SessionDataCollectionContext));
             Assert.IsTrue(this.mockDataCollectionSink.IsSendFileAsyncInvoked);
+            eventLogDataCollector.Dispose();
         }
 
         [TestMethod]
@@ -390,6 +398,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
                                && str.Contains(filteredEntries[2].InstanceId.ToString())
                                && str.Contains(filteredEntries[3].InstanceId.ToString())
                                && str.Contains(filteredEntries[4].InstanceId.ToString()))));
+            eventLog.Dispose();
         }
 
         [TestMethod]
@@ -433,6 +442,7 @@ namespace Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests
                                && str.Contains(filteredEntries[2].InstanceId.ToString())
                                && str.Contains(filteredEntries[3].InstanceId.ToString())
                                && str.Contains(filteredEntries[4].InstanceId.ToString()))));
+            eventLog.Dispose();
         }
     }
 

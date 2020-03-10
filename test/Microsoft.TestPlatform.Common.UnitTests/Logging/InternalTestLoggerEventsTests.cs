@@ -68,6 +68,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(message, eventArgs.Message);
             Assert.AreEqual(TestMessageLevel.Informational, eventArgs.Level);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -96,6 +97,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsTrue(testResultReceived);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(result, eventArgs.Result);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -140,6 +142,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsTrue(waitSuccess, "Event must be raised within timeout.");
             Assert.IsTrue(testRunCompleteReceived);
             Assert.IsNotNull(eventArgs);
+            waitHandle.Dispose();
         }
 
         [TestMethod]
@@ -324,6 +327,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsTrue(discoveredTestsReceived);
             Assert.IsNotNull(receivedEventArgs);
             Assert.AreEqual(receivedEventArgs, discoveredTestsEventArgs);
+            waitHandle.Dispose();
         }
 
         /// <summary>
@@ -431,6 +435,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsTrue(discoveryCompleteReceived);
             Assert.IsNotNull(receivedEventArgs);
             Assert.AreEqual(receivedEventArgs, discoveryCompleteEventArgs);
+            waitHandle.Dispose();
         }
 
         /// <summary>
@@ -520,6 +525,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.IsNotNull(receivedEventArgs);
             Assert.AreEqual(receivedEventArgs, testRunStartEventArgs);
             Assert.AreEqual("Name=Test1", receivedEventArgs.TestRunCriteria.TestCaseFilter);
+            waitHandle.Dispose();
         }
 
         /// <summary>
@@ -554,6 +560,7 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             Assert.AreEqual(receivedEventArgs, testRunMessageEventArgs);
             Assert.AreEqual(message, receivedEventArgs.Message);
             Assert.AreEqual(TestMessageLevel.Informational, receivedEventArgs.Level);
+            waitHandle.Dispose();
         }
 
         /// <summary>
@@ -568,7 +575,4 @@ namespace Microsoft.TestPlatform.Common.UnitTests.Logging
             return loggerEvents;
         }
     }
-
-
-
 }

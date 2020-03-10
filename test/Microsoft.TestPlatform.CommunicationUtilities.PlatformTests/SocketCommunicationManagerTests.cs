@@ -83,6 +83,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
             await this.tcpClient.ConnectAsync(IPAddress.Loopback, port).ConfigureAwait(false);
             Assert.IsTrue(this.tcpClient.Connected);
             Assert.IsTrue(waitEvent.WaitOne(1000) && clientConnected);
+            waitEvent.Dispose();
         }
 
         [TestMethod]

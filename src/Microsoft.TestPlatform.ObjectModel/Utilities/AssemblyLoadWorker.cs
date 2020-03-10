@@ -369,6 +369,8 @@ namespace Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities
                             }
                         }
                     }
+
+                    reader.Dispose();
                 }
             }
             catch (Exception ex)

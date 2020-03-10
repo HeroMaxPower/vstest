@@ -156,6 +156,8 @@ namespace Microsoft.VisualStudio.TestPlatform.ObjectModel
                         eventListener.EnableEvents(UnitTestEventSource.Log, EventLevel.Verbose);
                     }
 
+                    eventListener.Dispose();
+
                     isInitialized = true;
                 }
                 catch (Exception ex)

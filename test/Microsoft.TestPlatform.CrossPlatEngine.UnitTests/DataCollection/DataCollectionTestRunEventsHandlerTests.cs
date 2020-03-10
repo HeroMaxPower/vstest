@@ -83,6 +83,7 @@ namespace Microsoft.TestPlatform.CrossPlatEngine.UnitTests.DataCollection
             this.proxyDataCollectionManager.Verify(
                 dcm => dcm.AfterTestRunEnd(false, It.IsAny<ITestRunEventsHandler>()),
                 Times.Once);
+            cancellationTokenSource.Dispose();
         }
 
         [TestMethod]
@@ -103,6 +104,7 @@ namespace Microsoft.TestPlatform.CrossPlatEngine.UnitTests.DataCollection
             this.proxyDataCollectionManager.Verify(
                 dcm => dcm.AfterTestRunEnd(true, It.IsAny<ITestRunEventsHandler>()),
                 Times.Once);
+            cancellationTokenSource.Dispose();
         }
 
         #region Get Combined Attachments

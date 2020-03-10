@@ -67,6 +67,9 @@ namespace Microsoft.TestPlatform.PerformanceTests
             dataTransferred.Wait();
 
             Assert.IsTrue(watch.Elapsed < TimeSpan.FromSeconds(4), "Elapsed: " + watch.Elapsed);
+            dataTransferred.Dispose();
+            clientConnected.Dispose();
+            serverConnected.Dispose();
         }
 
         [TestMethod]

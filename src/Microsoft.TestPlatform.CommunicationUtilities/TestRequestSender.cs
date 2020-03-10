@@ -195,6 +195,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
                 }
 
                 protocolNegotiated.Set();
+                protocolNegotiated.Dispose();
             };
             this.channel.MessageReceived += this.onMessageReceived;
 

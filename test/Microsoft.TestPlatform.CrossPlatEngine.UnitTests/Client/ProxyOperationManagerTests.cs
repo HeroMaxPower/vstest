@@ -174,6 +174,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             localTestOperationManager.SetupChannel(Enumerable.Empty<string>(), this.defaultRunSettings);
 
             mockCommunicationServer.Verify(s => s.Start(IPAddress.Loopback.ToString() + ":0"), Times.Once);
+            testRequestSender.Dispose();
         }
 
         [TestMethod]
@@ -205,6 +206,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             localTestOperationManager.SetupChannel(Enumerable.Empty<string>(), this.defaultRunSettings);
 
             mockCommunicationEndpoint.Verify(s => s.Start(It.IsAny<string>()), Times.Once);
+            testRequestSender.Dispose();
         }
 
         [TestMethod]

@@ -29,6 +29,7 @@ namespace vstest.console.UnitTests.Publisher
 
             // Verify.
             mockFileHelper.Verify(fh => fh.CreateDirectory(It.IsAny<string>()), Times.Once);
+            publishMetrics.Dispose();
         }
 
         [TestMethod]
@@ -45,6 +46,7 @@ namespace vstest.console.UnitTests.Publisher
 
             // Verify.
             mockFileHelper.Verify(fh => fh.WriteAllTextToFile(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            publishMetrics.Dispose();
         }
     }
 }

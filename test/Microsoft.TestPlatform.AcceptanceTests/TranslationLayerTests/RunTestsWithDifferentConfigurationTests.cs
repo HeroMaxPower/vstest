@@ -91,7 +91,7 @@ namespace Microsoft.TestPlatform.AcceptanceTests.TranslationLayerTests
                 this.runEventHandler);
 
             cts.Cancel();
-
+            cts.Dispose();
             // Assert
             this.runEventHandler.EnsureSuccess();
             Assert.AreEqual(6, this.runEventHandler.TestResults.Count);
@@ -164,7 +164,7 @@ namespace Microsoft.TestPlatform.AcceptanceTests.TranslationLayerTests
                 this.runEventHandler);
 
             cts.Cancel();
-
+            cts.Dispose();
             // Assert
             Assert.AreEqual(1, this.runEventHandler.TestResults.Count);
             Assert.AreEqual(1, this.runEventHandler.TestResults.Count(t => t.Outcome == TestOutcome.Passed));

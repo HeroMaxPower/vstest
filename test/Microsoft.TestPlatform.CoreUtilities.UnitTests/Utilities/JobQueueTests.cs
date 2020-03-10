@@ -277,6 +277,8 @@ namespace TestPlatform.CoreUtilities.UnitTests
                     // if we reach here it means that the queue was successfully blocked at some point in between job6 and job11
                     // and subsequently unblocked.
                 }
+
+                jobProcessed.Dispose();
             }
         }
 
@@ -333,6 +335,8 @@ namespace TestPlatform.CoreUtilities.UnitTests
                     // if we reach here it means that the queue was successfully blocked at some point in between job6 and job11
                     // and subsequently unblocked.
                 }
+
+                jobProcessed.Dispose();
             }
         }
 
@@ -385,6 +389,8 @@ namespace TestPlatform.CoreUtilities.UnitTests
 
                     // if we reach here it means that the queue was never blocked.
                 }
+
+                jobProcessed.Dispose();
             }
         }
 
@@ -414,6 +420,8 @@ namespace TestPlatform.CoreUtilities.UnitTests
                     jobProcessed.WaitOne();
                 }
             }
+
+            jobProcessed.Dispose();
         }
 
 
@@ -452,8 +460,11 @@ namespace TestPlatform.CoreUtilities.UnitTests
 
                 gotBlocked.WaitOne();
                 jobQueue.Dispose();
+                job1Running.Dispose();
                 queueThread.Join();
             }
+
+            allowJobProcessingHandlerToProceed.Dispose();
         }
 
         #region Implementation

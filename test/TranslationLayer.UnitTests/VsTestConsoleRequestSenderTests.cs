@@ -698,6 +698,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer.UnitTests
 
             manualEvent.WaitOne();
             mockHandler.Verify(mh => mh.HandleLogMessage(TestMessageLevel.Error, It.IsAny<string>()), Times.Once);
+            manualEvent.Dispose();
         }
 
         [TestMethod]
@@ -1867,6 +1868,7 @@ namespace Microsoft.TestPlatform.VsTestConsole.TranslationLayer.UnitTests
 
             manualEvent.WaitOne();
             mockHandler.Verify(mh => mh.HandleLogMessage(TestMessageLevel.Error, It.IsAny<string>()), Times.Once);
+            manualEvent.Dispose();
         }
 
         [TestMethod]

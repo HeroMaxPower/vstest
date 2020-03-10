@@ -153,6 +153,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
            {
                loggerEvents.RaiseTestRunMessage(default(TestRunMessageEventArgs));
            });
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -175,6 +176,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.AssertsForTestMessageHandler();
             this.mockProgressIndicator.Verify(pi => pi.Pause(), Times.Exactly(3));
             this.mockProgressIndicator.Verify(pi => pi.Start(), Times.Exactly(3));
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -197,6 +199,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.AssertsForTestMessageHandler();
             this.mockProgressIndicator.Verify(pi => pi.Pause(), Times.Exactly(3));
             this.mockProgressIndicator.Verify(pi => pi.Start(), Times.Exactly(3));
+            loggerEvents.Dispose();
         }
 
         private void AssertsForTestMessageHandler()
@@ -225,6 +228,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             {
                 loggerEvents.RaiseTestResult(default(TestResultEventArgs));
             });
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -259,6 +263,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine("  Standard Output Messages:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -288,6 +293,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             // Verify
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.StdOutMessagesBanner, OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -320,6 +326,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             // Verify
             this.mockOutput.Verify(o => o.WriteLine("  Standard Output Messages:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -344,6 +351,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             // Verify
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunFailed, OutputLevel.Error), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(message, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -368,6 +376,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             // Verify
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunFailed, OutputLevel.Error), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(message, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -391,6 +400,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             // Verify
             this.mockOutput.Verify(o => o.WriteLine(message, OutputLevel.Warning), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -418,6 +428,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunFailed, OutputLevel.Error), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(message, OutputLevel.Warning), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(errorMessage, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -443,6 +454,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.WaitForEventCompletion();
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.StdOutMessagesBanner, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -468,6 +480,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine("  Standard Error Messages:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -493,6 +506,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.WaitForEventCompletion();
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.StdErrMessagesBanner, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -518,6 +532,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine("  Additional Information Messages:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -545,6 +560,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.WaitForEventCompletion();
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.AddnlInfoMessagesBanner, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -570,6 +586,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine("TestName", OutputLevel.Information), Times.Exactly(3));
             this.mockProgressIndicator.Verify(pi => pi.Pause(), Times.Exactly(5));
             this.mockProgressIndicator.Verify(pi => pi.Start(), Times.Exactly(5));
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -595,6 +612,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine("", OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -620,6 +638,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.DbgTrcMessagesBanner, OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(" " + message, OutputLevel.Information), Times.Never());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -643,6 +662,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine("TestName [4m 5s]", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.Write(SkippedTestIndicator, OutputLevel.Information), Times.Exactly(3));
             this.mockOutput.Verify(o => o.WriteLine("TestName", OutputLevel.Information), Times.Exactly(3));
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -664,6 +684,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.FailedTestIndicator, "TestName [4m 5s]"), OutputLevel.Information), Times.Never);
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.SkippedTestIndicator, "TestName"), OutputLevel.Warning), Times.Never);
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.NotRunTestIndicator, "TestName"), OutputLevel.Information), Times.Never);
+            loggerEvents.Dispose();
         }
 
         [DataRow("[1h 2m]", new int[5] { 0, 1, 2, 3, 78 })]
@@ -691,6 +712,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.Write(PassedTestIndicator, OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("TestName " + expectedDuration, OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [DataTestMethod]
@@ -712,6 +734,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.Write(PassedTestIndicator, OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("TestName [< 1ms]", OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -735,6 +758,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummarySkippedTests, 0), OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunSuccessful, OutputLevel.Information), Times.Once());
             this.mockProgressIndicator.Verify(pi => pi.Stop(), Times.Once);
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -757,6 +781,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryPassedTests, 0), OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummarySkippedTests, 0), OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunFailed, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -781,6 +806,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryPassedTests, 0), OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummarySkippedTests, 0), OutputLevel.Information), Times.Never());
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunCanceled, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -795,6 +821,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.CompleteTestRun(null, true, false, null, null, new TimeSpan(1, 0, 0, 0));
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunCanceled, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -814,6 +841,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryForCanceledOrAbortedRun), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunAborted, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -828,6 +856,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.CompleteTestRun(null, false, true, null, null, new TimeSpan(1, 0, 0, 0));
 
             this.mockOutput.Verify(o => o.WriteLine(CommandLineResources.TestRunAborted, OutputLevel.Error), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -854,6 +883,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             loggerEvents.WaitForEventCompletion();
 
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestSourcesDiscovered, CommandLineOptions.Instance.Sources.Count()), OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -885,6 +915,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestSourcesDiscovered, CommandLineOptions.Instance.Sources.Count()), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("C:\\DummyTestFile.dll", OutputLevel.Information), Times.Once);
             this.mockOutput.Verify(o => o.WriteLine("C:\\DummyTestFile2.dll", OutputLevel.Information), Times.Once);
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -916,6 +947,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestSourcesDiscovered, CommandLineOptions.Instance.Sources.Count()), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("C:\\DummyTestFile.dll", OutputLevel.Information), Times.Never);
             this.mockOutput.Verify(o => o.WriteLine("C:\\DummyTestFile2.dll", OutputLevel.Information), Times.Never);
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -941,6 +973,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.ExecutionTimeFormatString, 1, CommandLineResources.Hours), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.ExecutionTimeFormatString, 1, CommandLineResources.Minutes), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.ExecutionTimeFormatString, 1, CommandLineResources.Seconds), OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -965,6 +998,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}", "  ErrorStackTrace"), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("  Error Message:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine("  Stack Trace:", OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -989,6 +1023,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine("TestName", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" Hello", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(String.Empty, OutputLevel.Information), Times.AtLeastOnce);
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -1020,6 +1055,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine("  Additional Information Messages:", OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(" AdditionalInfoCategory AnotherAdditionalInfoCategory", OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -1044,6 +1080,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
 
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.AttachmentOutputFormat, uriDataAttachment.Uri.LocalPath), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.AttachmentOutputFormat, uriDataAttachment1.Uri.LocalPath), OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         [TestMethod]
@@ -1084,6 +1121,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommandLine.UnitTests.Internal
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryFailedTests, 1), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryPassedTests, 1), OutputLevel.Information), Times.Once());
             this.mockOutput.Verify(o => o.WriteLine(string.Format(CultureInfo.CurrentCulture, CommandLineResources.TestRunSummaryTotalTests, 2), OutputLevel.Information), Times.Once());
+            loggerEvents.Dispose();
         }
 
         private TestCase CreateTestCase(string testCaseName)

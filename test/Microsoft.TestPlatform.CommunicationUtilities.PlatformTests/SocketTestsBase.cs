@@ -40,6 +40,7 @@ namespace Microsoft.TestPlatform.CommunicationUtilities.PlatformTests
 
             waitForMessage.WaitOne();
             Assert.AreEqual(DUMMYDATA, message);
+            waitForMessage.Dispose();
         }
 
         protected static string ReadData(TcpClient client)

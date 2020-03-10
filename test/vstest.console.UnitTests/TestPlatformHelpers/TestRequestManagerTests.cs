@@ -125,6 +125,7 @@ namespace vstest.console.UnitTests.TestPlatformHelpers
                 this.mockProcessHelper.Object);
 
 			Assert.IsFalse(this.mockLoggerEvents.EventsSubscribed());
+			requestManager.Dispose();
 		}
 
 		[TestMethod]

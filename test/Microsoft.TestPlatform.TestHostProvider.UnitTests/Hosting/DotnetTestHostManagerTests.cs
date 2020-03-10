@@ -346,6 +346,8 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             var startInfo = this.dotnetHostManager.GetTestHostProcessStartInfo(new[] { sourcePath }, null, this.defaultConnectionInfo);
 
             StringAssert.Contains(startInfo.FileName, "C:\\packages\\microsoft.testplatform.testhost\\15.0.0-Dev\\build\\netcoreapp2.1\\x64\\testhost.exe");
+            runtimeConfigStream.Dispose();
+            depsFileStream.Dispose();
         }
 
         [TestMethod]
@@ -415,6 +417,8 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             var startInfo = this.dotnetHostManager.GetTestHostProcessStartInfo(new[] { sourcePath }, null, this.defaultConnectionInfo);
 
             StringAssert.Contains(startInfo.FileName, "C:\\packages\\microsoft.testplatform.testhost\\15.0.0-Dev\\build\\netcoreapp2.1\\x86\\testhost.x86.exe");
+            runtimeConfigStream.Dispose();
+            depsFileStream.Dispose();
         }
 
         [TestMethod]
@@ -447,6 +451,7 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             cancellationTokenSource.Cancel();
 
             Assert.ThrowsException<AggregateException>(() => this.dotnetHostManager.LaunchTestHostAsync(startInfo, cancellationTokenSource.Token).Wait());
+            cancellationTokenSource.Dispose();
         }
 
         [TestMethod]
@@ -694,6 +699,8 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             var startInfo = this.dotnetHostManager.GetTestHostProcessStartInfo(new[] { sourcePath }, null, this.defaultConnectionInfo);
 
             Assert.IsTrue(startInfo.Arguments.Contains(testHostFullPath));
+            runtimeConfigStream.Dispose();
+            depsFileStream.Dispose();
         }
 
         [TestMethod]
@@ -761,6 +768,8 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             var startInfo = this.dotnetHostManager.GetTestHostProcessStartInfo(new[] { sourcePath }, null, this.defaultConnectionInfo);
 
             Assert.IsTrue(startInfo.Arguments.Contains(testHostPath));
+            runtimeConfigStream.Dispose();
+            depsFileStream.Dispose();
         }
 
         [TestMethod]
@@ -827,6 +836,8 @@ namespace TestPlatform.TestHostProvider.UnitTests.Hosting
             var startInfo = this.dotnetHostManager.GetTestHostProcessStartInfo(new[] { sourcePath }, null, this.defaultConnectionInfo);
 
             Assert.IsTrue(startInfo.Arguments.Contains(testHostFullPath));
+            runtimeConfigStream.Dispose();
+            depsFileStream.Dispose();
         }
 
         [TestMethod]

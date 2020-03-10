@@ -20,6 +20,7 @@ namespace Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests
             timer.ResetTimer(TimeSpan.FromMilliseconds(1));
             this.timerEvent.Wait(1000);
             Assert.AreEqual(1, this.callBackCount, "Should have fired once.");
+            timer.Dispose();
         }
 
         private void TimerCallback()

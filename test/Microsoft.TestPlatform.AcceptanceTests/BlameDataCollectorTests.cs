@@ -98,11 +98,13 @@ namespace Microsoft.TestPlatform.AcceptanceTests
                 {
                 }
                 file.Dispose();
+                reader.Dispose();
                 return true;
             }
             catch (XmlException)
             {
                 file.Dispose();
+                reader.Dispose();
                 return false;
             }
         }

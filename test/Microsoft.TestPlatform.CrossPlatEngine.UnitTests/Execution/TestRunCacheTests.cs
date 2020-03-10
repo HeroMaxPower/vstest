@@ -27,6 +27,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             cache.OnTestStarted(tr.TestCase);
 
             CollectionAssert.Contains(cache.InProgressTests.ToList(), tr.TestCase);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -43,6 +44,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
                 Assert.AreEqual(i, cache.InProgressTests.Count - 1);
             }
+            cache.Dispose();
         }
 
         //[TestMethod]
@@ -79,6 +81,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.AreEqual(0, cache.TestResults.Count);
             Assert.AreEqual(0, cache.InProgressTests.Count);
             Assert.AreEqual(2, tester.TotalInProgressTestsReceived);
+            cache.Dispose();
         }
 
         #endregion
@@ -99,6 +102,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             }
 
             Assert.AreEqual(2, cache.TotalExecutedTests);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -114,6 +118,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
                 cache.OnNewTestResult(tr);
                 CollectionAssert.Contains(cache.TestResults.ToList(), tr);
             }
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -132,6 +137,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
             Assert.AreEqual(2, cache.TestRunStatistics.ExecutedTests);
             Assert.AreEqual(2, cache.TestRunStatistics.Stats[TestOutcome.Passed]);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -149,6 +155,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             }
 
             Assert.AreEqual(0, cache.InProgressTests.Count);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -167,6 +174,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.AreEqual(1, tester.CacheHitCount);
             Assert.AreEqual(cacheSize, cache.TotalExecutedTests);
             Assert.AreEqual(0, cache.TestResults.Count);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -186,6 +194,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.AreEqual(0, tester.CacheHitCount);
             Assert.AreEqual(executedTests, cache.TotalExecutedTests);
             Assert.AreEqual(executedTests, cache.TestResults.Count);
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -206,6 +215,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.AreEqual(4, tester.CacheHitCount);
             Assert.AreEqual(executedTests, cache.TotalExecutedTests);
             Assert.AreEqual(5, cache.TestResults.Count);
+            cache.Dispose();
         }
 
         #endregion
@@ -221,6 +231,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             var cache = new TestRunCache(cacheSize, TimeSpan.MaxValue, tester.CacheHitOnSize);
 
             Assert.IsFalse(cache.OnTestCompletion(null));
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -232,6 +243,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             var cache = new TestRunCache(cacheSize, TimeSpan.MaxValue, tester.CacheHitOnSize);
 
             Assert.IsFalse(cache.OnTestCompletion(this.GetTestResult(0).TestCase));
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -249,6 +261,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
                 Assert.AreEqual(0, cache.InProgressTests.Count);
             }
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -273,6 +286,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
                 Assert.AreEqual(0, cache.InProgressTests.Count);
             }
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -290,6 +304,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.IsFalse(cache.OnTestCompletion(tr2.TestCase));
 
             Assert.AreEqual(1, cache.InProgressTests.Count);
+            cache.Dispose();
         }
 
         #endregion
@@ -314,6 +329,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
             var testResultsInCache = cache.GetLastChunk();
             CollectionAssert.AreEqual(pushedTestResults, testResultsInCache.ToList());
+            cache.Dispose();
         }
 
         [TestMethod]
@@ -332,6 +348,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
 
             cache.GetLastChunk();
             Assert.AreEqual(0, cache.TestResults.Count);
+            cache.Dispose();
         }
 
         #endregion
@@ -366,6 +383,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Execution
             Assert.AreEqual(cacheSize, stats.ExecutedTests);
             Assert.AreEqual(5, stats.Stats[TestOutcome.Passed]);
             Assert.AreEqual(5, stats.Stats[TestOutcome.Failed]);
+            cache.Dispose();
         }
 
         #endregion

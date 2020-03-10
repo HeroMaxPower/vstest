@@ -24,6 +24,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Adapter
             var frameworkHandle = new FrameworkHandle(null, new TestRunCache(100, TimeSpan.MaxValue, (s, r, ip) => { }), tec, null);
 
             Assert.IsFalse(frameworkHandle.EnableShutdownAfterTestRun);
+            frameworkHandle.Dispose();
         }
 
         [TestMethod]
@@ -35,6 +36,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Adapter
             frameworkHandle.EnableShutdownAfterTestRun = true;
 
             Assert.IsTrue(frameworkHandle.EnableShutdownAfterTestRun);
+            frameworkHandle.Dispose();
         }
 
         [TestMethod]
@@ -58,10 +60,12 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Adapter
             try
             {
                 frameworkHandle.LaunchProcessWithDebuggerAttached(null, null, null, null);
+                frameworkHandle.Dispose();
             }
             catch (InvalidOperationException exception)
             {
                 isExceptionThrown = true;
+                frameworkHandle.Dispose();
                 Assert.AreEqual("This operation is not allowed in the context of a non-debug run.", exception.Message);
             }
 
@@ -82,7 +86,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Adapter
                                       mockTestRunEventsHandler.Object);
 
             frameworkHandle.LaunchProcessWithDebuggerAttached(null, null, null, null);
-
+            frameworkHandle.Dispose();
             mockTestRunEventsHandler.Verify(mt =>
                 mt.LaunchProcessWithDebuggerAttached(It.IsAny<TestProcessStartInfo>()), Times.Once);
         }

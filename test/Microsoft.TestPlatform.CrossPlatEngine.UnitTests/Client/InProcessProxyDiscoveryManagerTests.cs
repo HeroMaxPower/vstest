@@ -55,6 +55,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyDiscoveryManager.DiscoverTests(discoveryCriteria, null);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "DiscoverTests should call Initialize");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -73,6 +74,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "DiscoverTests should call Initialize");
             CollectionAssert.AreEquivalent(expectedResult, TestPluginCache.Instance.GetExtensionPaths(string.Empty));
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -88,6 +90,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyDiscoveryManager.DiscoverTests(discoveryCriteria, mockTestDiscoveryEventsHandler.Object);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IDiscoveryManager.DiscoverTests should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -106,6 +109,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyDiscoveryManager.DiscoverTests(discoveryCriteria, mockTestDiscoveryEventsHandler.Object);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "ITestDiscoveryEventsHandler.HandleDiscoveryComplete should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -119,6 +123,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyDiscoveryManager.Abort();
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IDiscoveryManager.Abort should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -138,6 +143,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IDiscoveryManager.DiscoverTests should get called");
             this.mockTestHostManager.Verify(hm => hm.GetTestSources(inputSources), Times.Once);
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -162,6 +168,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             // AdapterSourceMap should contain updated testSources.
             Assert.AreEqual(actualSources.FirstOrDefault(), discoveryCriteria.AdapterSourceMap.FirstOrDefault().Value.FirstOrDefault());
             Assert.AreEqual(inputSource.FirstOrDefault(), discoveryCriteria.Package);
+            manualResetEvent.Dispose();
         }
     }
 }

@@ -81,6 +81,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.UnitTests
 
                 SeekToBeginning(this.stream);
                 Assert.AreEqual("a", this.reader.ReadString());
+                communicationChannel.Dispose();
             }
         }
 

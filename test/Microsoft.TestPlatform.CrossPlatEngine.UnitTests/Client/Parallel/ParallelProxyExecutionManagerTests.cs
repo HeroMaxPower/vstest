@@ -102,6 +102,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.AreEqual(4, createdMockManagers.Count, "Number of Concurrent Managers created should be 4");
             createdMockManagers.ForEach(em => em.Verify(m => m.Abort(It.IsAny<ITestRunEventsHandler>()), Times.Once));
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -113,6 +114,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.AreEqual(4, createdMockManagers.Count, "Number of Concurrent Managers created should be 4");
             createdMockManagers.ForEach(em => em.Verify(m => m.Cancel(It.IsAny<ITestRunEventsHandler>()), Times.Once));
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -125,6 +127,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(this.sources.Count, processedSources.Count, "All Sources must be processed.");
             AssertMissingAndDuplicateSources(processedSources);
+            parallelExecutionManager.Dispose();
         }
 
 
@@ -139,6 +142,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(this.testCases.Count, processedTestCases.Count, "All Tests must be processed.");
             AssertMissingAndDuplicateTestCases(this.testCases, processedTestCases);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -154,6 +158,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(this.sources.Count, this.processedSources.Count, "All Sources must be processed.");
             AssertMissingAndDuplicateSources(this.processedSources);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -169,6 +174,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.proxyManagerFuncCalled = false;
             parallelExecutionManager.HandlePartialRunComplete(proxyDataCollectionManager, completeArgs, null, null, null);
             Assert.IsTrue(this.proxyManagerFuncCalled);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -183,6 +189,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             var proxyExecutionManagerManager = new ProxyExecutionManager(this.mockRequestData.Object, this.mockRequestSender.Object, this.mockTestHostManager.Object);
             parallelExecutionManager.HandlePartialRunComplete(proxyExecutionManagerManager, completeArgs, null, null, null);
             Assert.IsTrue(this.proxyManagerFuncCalled);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -198,6 +205,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(this.testCases.Count, processedTestCases.Count, "All Tests must be processed.");
             AssertMissingAndDuplicateTestCases(this.testCases, processedTestCases);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -213,6 +221,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(1, this.processedSources.Count, "Abort should stop all sources execution.");
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -229,6 +238,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(1, this.processedSources.Count, "Abort should stop all sources execution.");
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -244,6 +254,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(2, this.processedSources.Count, "Abort should stop all sources execution.");
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -263,6 +274,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             // Processed sources should be 1 since the 2nd source is never discovered
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             Assert.AreEqual(1, this.processedSources.Count, "All Sources must be processed.");
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -280,6 +292,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             mockHandler.Verify(s => s.HandleLogMessage(TestMessageLevel.Error, It.IsAny<string>()), Times.Once);
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -297,6 +310,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.IsTrue(this.executionCompleted.Wait(taskTimeout), "Test run not completed.");
             mockHandler.Verify(s => s.HandleRawMessage(It.Is<string>(str => str.Contains(MessageType.TestMessage))));
+            parallelExecutionManager.Dispose();
         }
 
         [TestMethod]
@@ -388,6 +402,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             Assert.IsNull(assertException, assertException?.ToString());
             Assert.AreEqual(sources.Count, this.processedSources.Count, "All Sources must be processed.");
             AssertMissingAndDuplicateSources(this.processedSources);
+            parallelExecutionManager.Dispose();
         }
 
         private ParallelProxyExecutionManager SetupExecutionManager(Func<IProxyExecutionManager> proxyManagerFunc, int parallelLevel)
@@ -542,6 +557,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
 
             Assert.AreEqual(concurrentManagersCount, createdMockManagers.Count, $"Number of Concurrent Managers created should be {concurrentManagersCount}");
             createdMockManagers.ForEach(em => em.Verify(m => m.Initialize(skipDefaultAdapters), Times.Once));
+            parallelExecutionManager.Dispose();
         }
     }
 }

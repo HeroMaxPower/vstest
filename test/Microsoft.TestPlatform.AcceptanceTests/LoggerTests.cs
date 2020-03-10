@@ -121,6 +121,7 @@ namespace Microsoft.TestPlatform.AcceptanceTests
                 while (reader.Read())
                 {
                 }
+                reader.Dispose();
                 return true;
             }
             catch (XmlException)

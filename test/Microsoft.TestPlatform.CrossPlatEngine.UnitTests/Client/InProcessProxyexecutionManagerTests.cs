@@ -79,6 +79,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyExecutionManager.StartTestRun(testRunCriteria, null);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IExecutionManager.StartTestRun should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -107,6 +108,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyExecutionManager.StartTestRun(testRunCriteria, null);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IExecutionManager.StartTestRun should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -133,6 +135,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.mockExecutionManager.Verify(o => o.StartTestRun(testRunCriteria.Tests, inputSource.FirstOrDefault(), testRunCriteria.TestRunSettings, It.IsAny<TestExecutionContext>(), null, null));
             this.mockTestHostManager.Verify(hm => hm.GetTestSources(inputSource), Times.Once);
             Assert.AreEqual(actualSources.FirstOrDefault(), testRunCriteria.Tests.FirstOrDefault().Source);
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -155,6 +158,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.mockExecutionManager.Verify(o => o.StartTestRun(testRunCriteria.Tests, null, testRunCriteria.TestRunSettings, It.IsAny<TestExecutionContext>(), null, null));
             this.mockTestHostManager.Verify(hm => hm.GetTestSources(actualSources));
             Assert.AreEqual(actualSources.FirstOrDefault(), testRunCriteria.Tests.FirstOrDefault().Source);
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -173,6 +177,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyExecutionManager.StartTestRun(testRunCriteria, mockTestRunEventsHandler.Object);
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "ITestRunEventsHandler.HandleTestRunComplete should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -186,6 +191,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyExecutionManager.Abort(It.IsAny<ITestRunEventsHandler>());
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IExecutionManager.Abort should get called");
+            manualResetEvent.Dispose();
         }
 
         [TestMethod]
@@ -199,6 +205,7 @@ namespace TestPlatform.CrossPlatEngine.UnitTests.Client
             this.inProcessProxyExecutionManager.Cancel(It.IsAny<ITestRunEventsHandler>());
 
             Assert.IsTrue(manualResetEvent.WaitOne(5000), "IExecutionManager.Abort should get called");
+            manualResetEvent.Dispose();
         }
     }
 }

@@ -104,6 +104,7 @@ namespace Microsoft.VisualStudio.TestPlatform.CommunicationUtilities
 
             rh.InitializeCommunication();
             this.requestHandler.WaitForRequestSenderConnection(1000);
+            rh.Dispose();
         }
 
         [TestMethod]
