@@ -10,7 +10,7 @@
     <RootNamespace>Microsoft.TestPlatform.Extensions.EventLogCollector.UnitTests</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net451</TargetFramework>
+    <TargetFramework>net451;net5.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net451</TargetFrameworks>

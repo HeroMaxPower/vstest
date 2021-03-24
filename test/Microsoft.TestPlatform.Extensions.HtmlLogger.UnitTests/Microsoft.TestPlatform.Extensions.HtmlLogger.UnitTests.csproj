@@ -10,7 +10,7 @@
   <Import Project="$(TestPlatformRoot)scripts/build/TestPlatform.Settings.targets" />
   <PropertyGroup>
     <OutputType Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;net451</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net451;net5.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.TestPlatform.Extensions.HtmlLogger\Microsoft.TestPlatform.Extensions.HtmlLogger.csproj" />

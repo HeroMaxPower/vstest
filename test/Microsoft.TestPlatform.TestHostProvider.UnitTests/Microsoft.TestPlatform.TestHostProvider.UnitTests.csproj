@@ -9,7 +9,7 @@
   <PropertyGroup>
     <OutputType Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">Exe</OutputType>
     <AssemblyName>Microsoft.TestPlatform.TestHostProvider.UnitTests</AssemblyName>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net472;net5.0</TargetFrameworks>
     <EnableCodeAnalysis>true</EnableCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>

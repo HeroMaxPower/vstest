@@ -6,7 +6,7 @@
   <Import Project="$(TestPlatformRoot)scripts\build\TestPlatform.Settings.targets" />
   <PropertyGroup>
     <AssemblyName>Microsoft.TestPlatform.TestUtilities</AssemblyName>
-    <TargetFrameworks>netcoreapp2.1;net451</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net451;net5.0</TargetFrameworks>
     <WarningsAsErrors>true</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>

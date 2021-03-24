@@ -7,7 +7,7 @@
   <PropertyGroup>
     <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
     <AssemblyName>Microsoft.TestPlatform.Build</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.0;net5.0</TargetFramework>
     <WarningsAsErrors>true</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>

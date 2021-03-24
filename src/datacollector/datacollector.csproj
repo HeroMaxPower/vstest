@@ -9,7 +9,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyName>datacollector</AssemblyName>
-    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net5.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'WINDOWS_NT' ">$(TargetFrameworks);net472</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' != 'WINDOWS_NT' ">$(TargetFrameworks);net451</TargetFrameworks>
     <TargetFrameworks Condition=" '$(DotNetBuildFromSource)' == 'true' ">netcoreapp2.1</TargetFrameworks>

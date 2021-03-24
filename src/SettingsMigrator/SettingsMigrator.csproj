@@ -6,7 +6,7 @@
   <Import Project="$(TestPlatformRoot)scripts/build/TestPlatform.Settings.targets" />
   <PropertyGroup>
     <AssemblyName>SettingsMigrator</AssemblyName>
-    <TargetFramework>net451</TargetFramework>
+    <TargetFramework>net451;net5.0</TargetFramework>
 	<WarningsAsErrors>true</WarningsAsErrors>
     <EnableCodeAnalysis>true</EnableCodeAnalysis>
     <WarningsAsErrors>true</WarningsAsErrors>

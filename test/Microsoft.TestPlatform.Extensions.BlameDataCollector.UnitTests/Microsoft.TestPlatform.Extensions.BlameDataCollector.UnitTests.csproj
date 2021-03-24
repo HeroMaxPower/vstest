@@ -10,7 +10,7 @@
     <RootNamespace>Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net472;net5.0</TargetFrameworks>
     <AssemblyName>Microsoft.TestPlatform.Extensions.BlameDataCollector.UnitTests</AssemblyName>
     <OutputType Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">Exe</OutputType>
     <WarningsAsErrors>true</WarningsAsErrors>
